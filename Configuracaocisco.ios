@@ -1,0 +1,45 @@
+!Comentários - Destivar comandos;
+enable
+
+    !Configurando Data e Hora
+    clock set 15:15:00 22 May 2024
+    
+    !Modo de Configuração Global
+    configure terminal
+        !Configuração Hostname
+        hostname sw-01
+
+        service password-encryption
+
+        service timestamps log datetime msec 
+
+        no ip domain-lookup 
+
+        banner motd #AVISO: acesso autorizado somente a funcionarios#
+
+        enable secret 123@senac
+
+        username senac secret 123@senac 
+        username amorim password 123@senac
+        username admin privilege 15 secret 123@senac 
+
+        line console 0 
+
+            login local
+
+            password 123@senac
+
+            loggin synchronous
+
+            exec-timeout 5 30
+
+            end
+
+        !Sair de todos os Modos
+        end
+    
+    !Salvando da RAM para NVRAM
+    copy running-config startup-config 
+
+    !Verificação das Configurações
+    show running-config
